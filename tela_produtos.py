@@ -105,7 +105,7 @@ class TelaProdutos:
         self.carregar_produtos()
 
     def carregar_produtos(self):
-        tabela_produtos = db.select_produtos()
+        tabela_produtos = db.select_todos_produtos()
         colunas = [coluna[0] for coluna in db.select_colunas()]
         produtos = [dict(zip(colunas, produto)) for produto in tabela_produtos]
 
@@ -208,7 +208,7 @@ class TelaProdutos:
 
     def filtrar_tabela(self, e):
         pesquisa = self.barra_pesquisa.value.lower()
-        tabela_produtos = db.select_produtos()
+        tabela_produtos = db.select_todos_produtos()
         colunas = [coluna[0] for coluna in db.select_colunas()]
         produtos = [dict(zip(colunas, produto)) for produto in tabela_produtos]
         produtos_filtrados = [

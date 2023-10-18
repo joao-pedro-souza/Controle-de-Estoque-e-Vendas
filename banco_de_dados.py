@@ -4,6 +4,7 @@ import os
 
 class BancoDeDados:
     def __init__(self):
+        self.criar_pasta()
         self.criar_conexao()
         self.criar_tabela_produtos()
         self.criar_tabela_vendas()
@@ -45,7 +46,7 @@ class BancoDeDados:
         )
         self.conexao.commit()
 
-    def select_produtos(self):
+    def select_todos_produtos(self):
         self.cursor.execute('SELECT * FROM produtos ORDER BY nome')
         return self.cursor.fetchall()
 
@@ -73,3 +74,8 @@ class BancoDeDados:
                     WHERE id = (?)
                     """, [nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque, id])
         self.conexao.commit()
+
+    def select_produto(self, nome):
+        self.cursor.execute('SELECT * FROM produtos WHERE nome = (?)', [nome])
+        return self.cursor.fetchone()
+        
