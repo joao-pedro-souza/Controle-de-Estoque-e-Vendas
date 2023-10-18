@@ -1,10 +1,13 @@
 import flet as ft
 from tela_produtos import TelaProdutos
 
-tl = TelaProdutos()
+
 
 class Interface:
-    def __init__(self):
+    def __init__(self, page):
+        self.page = page
+        tl = TelaProdutos(page)
+
         self.guias = ft.Tabs(
             selected_index=0,
             animation_duration=300,

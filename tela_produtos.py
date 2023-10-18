@@ -4,17 +4,23 @@ from banco_de_dados import BancoDeDados
 db = BancoDeDados()
 
 class TelaProdutos:
-    def __init__(self):
+    def __init__(self, page):
+        self.page = page
+
         self.barra_pesquisa = ft.TextField(
             label='Pesquisar Produto',
             suffix_icon='SEARCH'
         )
         
+        # Campos Cadastrar Produto
         self.nome = ft.TextField(label='Nome')
         self.preco_compra = ft.TextField(label='Preço de Compra')
         self.preco_venda = ft.TextField(label='Preço de Venda')
         self.quantidade_estoque = ft.TextField(label='Quantidade em Estoque')
         self.limite_estoque = ft.TextField(label='Alertar Estoque Baixo')
+
+        # Campo Deletar Produto
+        self.id_produto_deletado = ''
         
         self.campos = ft.Row(
             controls=[
@@ -57,6 +63,17 @@ class TelaProdutos:
             ],
         )
 
+        self.alert_deletar = ft.AlertDialog(
+            modal=True,
+            title=ft.Text('Apagar Produto'),
+            content=ft.Text('Deseja apagar o produto?'),
+            actions=[
+                ft.TextButton('Sim', on_click=self.confirmar_deletar),
+                ft.TextButton('Não', on_click=self.fechar_delete)
+            ],
+            actions_alignment=ft.MainAxisAlignment.END
+        )
+
         self.carregar_dados()
 
 
@@ -86,7 +103,8 @@ class TelaProdutos:
                                     ft.IconButton(
                                         ft.icons.DELETE,
                                         icon_color='RED',
-                                        data=linha
+                                        data=linha,
+                                        on_click=self.abrir_delete
                                     ),
                                     ft.IconButton(
                                         ft.icons.EDIT,
@@ -114,3 +132,23 @@ class TelaProdutos:
             self.tabela.rows.clear()
             self.carregar_dados()
             self.tabela.update()
+
+    def abrir_delete(self, e):
+        self.id_produto_deletado = str(e.control.data['id'])
+        self.page.dialog = self.alert_deletar
+        self.alert_deletar.open = True    
+        self.page.update()
+
+    def fechar_delete(self, e=False):
+        self.alert_deletar.open = False
+        self.page.update()
+    
+    def confirmar_deletar(self, e):
+        if self.id_produto_deletado:
+            db.deletar_produto(self.id_produto_deletado)
+            self.tabela.rows.clear()
+            self.carregar_dados()
+            self.tabela.update()
+            del self.id_produto_deletado
+            self.fechar_delete()
+

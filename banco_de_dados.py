@@ -62,3 +62,8 @@ class BancoDeDados:
             [nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque]
         )
         self.conexao.commit()
+
+
+    def deletar_produto(self, id):
+        self.cursor.execute('DELETE FROM produtos WHERE id = (?)', id)
+        self.conexao.commit()
