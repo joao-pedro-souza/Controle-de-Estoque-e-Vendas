@@ -2,6 +2,7 @@ import flet as ft
 from tela_produtos import TelaProdutos
 from tela_vendas import TelaVendas
 
+
 class Interface:
     def __init__(self, page):
         self.page = page
@@ -21,5 +22,6 @@ class Interface:
                     content=tv.tela
                 )
             ],
-            expand=1
+            expand=1,
+            on_change=tv.atualizar_produtos
         )

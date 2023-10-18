@@ -3,6 +3,7 @@ from banco_de_dados import BancoDeDados
 
 db = BancoDeDados()
 
+
 class TelaProdutos:
     def __init__(self, page):
         self.page = page
@@ -12,7 +13,7 @@ class TelaProdutos:
             suffix_icon='SEARCH',
             on_change=self.filtrar_tabela
         )
-        
+
         # Campos Cadastrar Produto
         self.nome = ft.TextField(label='Nome')
         self.preco_compra = ft.TextField(label='Preço de Compra')
@@ -25,12 +26,14 @@ class TelaProdutos:
         self.editar_nome = ft.TextField(label='Nome')
         self.editar_preco_compra = ft.TextField(label='Preço de Compra')
         self.editar_preco_venda = ft.TextField(label='Preço de Venda')
-        self.editar_quantidade_estoque = ft.TextField(label='Quantidade em Estoque')
-        self.editar_limite_estoque = ft.TextField(label='Alertar Estoque Baixo')
+        self.editar_quantidade_estoque = ft.TextField(
+            label='Quantidade em Estoque')
+        self.editar_limite_estoque = ft.TextField(
+            label='Alertar Estoque Baixo')
 
         # Guarda id do produto a ser deletado
         self.id_produto_deletado = None
-        
+
         self.campos = ft.Row(
             controls=[
                 self.nome,
@@ -99,41 +102,42 @@ class TelaProdutos:
             ]
         )
 
-        self.carregar_dados()
+        self.carregar_produtos()
 
-
-    def carregar_dados(self):
-        dados = db.select_produtos()
+    def carregar_produtos(self):
+        tabela_produtos = db.select_produtos()
         colunas = [coluna[0] for coluna in db.select_colunas()]
-        linhas = [dict(zip(colunas, linha)) for linha in dados]
+        produtos = [dict(zip(colunas, produto)) for produto in tabela_produtos]
 
-        for linha in linhas:
+        for produto in produtos:
             cor_estoque = 'white'
-            limite_estoque_numerico = isinstance(linha['limite_estoque'], int)
+            limite_estoque_numerico = isinstance(
+                produto['limite_estoque'], int)
 
             if limite_estoque_numerico:
-                if linha['quantidade_estoque'] <= linha['limite_estoque']:
+                if produto['quantidade_estoque'] <= produto['limite_estoque']:
                     cor_estoque = 'red'
-            
+
             self.tabela.rows.append(
                 ft.DataRow(
                     cells=[
-                        ft.DataCell(ft.Text(linha['id'])),
-                        ft.DataCell(ft.Text(linha['nome'])),
-                        ft.DataCell(ft.Text(linha['preco_compra'])),
-                        ft.DataCell(ft.Text(linha['quantidade_estoque'], color=cor_estoque)),
+                        ft.DataCell(ft.Text(produto['id'])),
+                        ft.DataCell(ft.Text(produto['nome'])),
+                        ft.DataCell(ft.Text(produto['preco_compra'])),
+                        ft.DataCell(
+                            ft.Text(produto['quantidade_estoque'], color=cor_estoque)),
                         ft.DataCell(
                             ft.Row(
                                 [
                                     ft.IconButton(
                                         ft.icons.DELETE,
                                         icon_color='RED',
-                                        data=linha,
+                                        data=produto,
                                         on_click=self.abrir_delete
                                     ),
                                     ft.IconButton(
                                         ft.icons.EDIT,
-                                        data=linha,
+                                        data=produto,
                                         on_click=self.abrir_edit
                                     )
                                 ]
@@ -143,35 +147,30 @@ class TelaProdutos:
                 )
             )
 
-    
     def atualizar_tabela(self):
         self.tabela.rows.clear()
-        self.carregar_dados()
+        self.carregar_produtos()
         self.tabela.update()
 
-
     def clicar_cadastrar(self, e):
-            db.cadastrar_produto(
-                self.nome.value, 
-                self.preco_compra.value, 
-                self.preco_venda.value, 
-                self.quantidade_estoque.value, 
-                self.limite_estoque.value
-            )
-            self.atualizar_tabela()
-
+        db.cadastrar_produto(
+            self.nome.value,
+            self.preco_compra.value,
+            self.preco_venda.value,
+            self.quantidade_estoque.value,
+            self.limite_estoque.value
+        )
+        self.atualizar_tabela()
 
     def abrir_delete(self, e):
         self.id_produto_deletado = str(e.control.data['id'])
         self.page.dialog = self.alert_deletar
-        self.alert_deletar.open = True    
+        self.alert_deletar.open = True
         self.page.update()
-
 
     def fechar_delete(self, e=False):
         self.alert_deletar.open = False
         self.page.update()
-    
 
     def confirmar_deletar(self, e):
         if self.id_produto_deletado:
@@ -179,7 +178,6 @@ class TelaProdutos:
             self.atualizar_tabela()
             del self.id_produto_deletado
             self.fechar_delete()
-
 
     def abrir_edit(self, e):
         self.editar_id.value = e.control.data['id']
@@ -192,7 +190,6 @@ class TelaProdutos:
         self.page.dialog = self.alert_editar
         self.alert_editar.open = True
         self.page.update()
-
 
     def confirmar_edit(self, e):
         db.editar_produto(
@@ -208,13 +205,13 @@ class TelaProdutos:
         self.page.update()
         self.atualizar_tabela()
 
-
     def filtrar_tabela(self, e):
         pesquisa = self.barra_pesquisa.value.lower()
         tabela_produtos = db.select_produtos()
         colunas = [coluna[0] for coluna in db.select_colunas()]
         produtos = [dict(zip(colunas, produto)) for produto in tabela_produtos]
-        produtos_filtrados = [produto for produto in produtos if pesquisa in produto['nome'].lower()]
+        produtos_filtrados = [
+            produto for produto in produtos if pesquisa in produto['nome'].lower()]
 
         self.tabela.rows.clear()
 
