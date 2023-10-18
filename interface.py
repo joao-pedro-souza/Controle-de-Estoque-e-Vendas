@@ -11,9 +11,7 @@ class Interface:
             tabs=[
                 ft.Tab(
                     text='Produtos',
-                    content=ft.Container(
-                        content=tl.barra_pesquisa
-                    )
+                    content=tl.tela
                 ),
                 ft.Tab(
                     text='Vendas'
