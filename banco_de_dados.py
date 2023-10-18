@@ -46,3 +46,19 @@ class BancoDeDados:
             )"""
         )
         self.conexao.commit()
+
+
+    def select_produtos(self):
+        self.cursor.execute('SELECT * FROM produtos')
+        return self.cursor.fetchall()
+    
+
+    def select_colunas(self):
+        return self.cursor.description
+    
+
+    def cadastrar_produto(self, nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque):
+        self.cursor.execute('INSERT INTO produtos (nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque) VALUES (?, ?, ?, ?, ?)',
+            [nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque]
+        )
+        self.conexao.commit()
