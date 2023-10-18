@@ -9,7 +9,8 @@ class TelaProdutos:
 
         self.barra_pesquisa = ft.TextField(
             label='Pesquisar Produto',
-            suffix_icon='SEARCH'
+            suffix_icon='SEARCH',
+            on_change=self.filtrar_tabela
         )
         
         # Campos Cadastrar Produto
@@ -159,16 +160,19 @@ class TelaProdutos:
             )
             self.atualizar_tabela()
 
+
     def abrir_delete(self, e):
         self.id_produto_deletado = str(e.control.data['id'])
         self.page.dialog = self.alert_deletar
         self.alert_deletar.open = True    
         self.page.update()
 
+
     def fechar_delete(self, e=False):
         self.alert_deletar.open = False
         self.page.update()
     
+
     def confirmar_deletar(self, e):
         if self.id_produto_deletado:
             db.deletar_produto(self.id_produto_deletado)
@@ -199,6 +203,48 @@ class TelaProdutos:
             self.editar_quantidade_estoque.value,
             self.editar_limite_estoque.value
         )
+
         self.alert_editar.open = False
         self.page.update()
         self.atualizar_tabela()
+
+
+    def filtrar_tabela(self, e):
+        pesquisa = self.barra_pesquisa.value.lower()
+        tabela_produtos = db.select_produtos()
+        colunas = [coluna[0] for coluna in db.select_colunas()]
+        produtos = [dict(zip(colunas, produto)) for produto in tabela_produtos]
+        produtos_filtrados = [produto for produto in produtos if pesquisa in produto['nome'].lower()]
+
+        self.tabela.rows.clear()
+
+        for produto in produtos_filtrados:
+            self.tabela.rows.append(
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(produto['id'])),
+                        ft.DataCell(ft.Text(produto['nome'])),
+                        ft.DataCell(ft.Text(produto['preco_venda'])),
+                        ft.DataCell(ft.Text(produto['quantidade_estoque'])),
+                        ft.DataCell(ft.Text(produto['limite_estoque'])),
+                        ft.DataCell(
+                            ft.Row(
+                                [
+                                    ft.IconButton(
+                                        ft.icons.DELETE,
+                                        icon_color='RED',
+                                        data=produto,
+                                        on_click=self.alert_deletar
+                                    ),
+                                    ft.IconButton(
+                                        ft.icons.EDIT,
+                                        data=produto,
+                                        on_click=self.alert_editar
+                                    )
+                                ]
+                            )
+                        )
+                    ]
+                )
+            )
+        self.tabela.update()
