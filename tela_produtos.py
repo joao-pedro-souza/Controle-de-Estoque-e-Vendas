@@ -123,7 +123,7 @@ class TelaProdutos:
                     cells=[
                         ft.DataCell(ft.Text(produto['id'])),
                         ft.DataCell(ft.Text(produto['nome'])),
-                        ft.DataCell(ft.Text(produto['preco_compra'])),
+                        ft.DataCell(ft.Text(produto['preco_venda'])),
                         ft.DataCell(
                             ft.Text(produto['quantidade_estoque'], color=cor_estoque)),
                         ft.DataCell(
@@ -161,6 +161,7 @@ class TelaProdutos:
             self.limite_estoque.value
         )
         self.atualizar_tabela()
+        self.limpar_campos()
 
     def abrir_delete(self, e):
         self.id_produto_deletado = str(e.control.data['id'])
@@ -223,7 +224,6 @@ class TelaProdutos:
                         ft.DataCell(ft.Text(produto['nome'])),
                         ft.DataCell(ft.Text(produto['preco_venda'])),
                         ft.DataCell(ft.Text(produto['quantidade_estoque'])),
-                        ft.DataCell(ft.Text(produto['limite_estoque'])),
                         ft.DataCell(
                             ft.Row(
                                 [
@@ -231,12 +231,12 @@ class TelaProdutos:
                                         ft.icons.DELETE,
                                         icon_color='RED',
                                         data=produto,
-                                        on_click=self.alert_deletar
+                                        on_click=self.abrir_delete
                                     ),
                                     ft.IconButton(
                                         ft.icons.EDIT,
                                         data=produto,
-                                        on_click=self.alert_editar
+                                        on_click=self.abrir_edit
                                     )
                                 ]
                             )
@@ -244,4 +244,18 @@ class TelaProdutos:
                     ]
                 )
             )
+        
         self.tabela.update()
+
+
+    def limpar_campos(self):
+        self.nome.value = ""
+        self.nome.update()
+        self.preco_compra.value = ""
+        self.preco_compra.update()
+        self.preco_venda.value = ""
+        self.preco_venda.update()
+        self.quantidade_estoque.value = ""
+        self.quantidade_estoque.update()
+        self.limite_estoque.value = ""
+        self.limite_estoque.update()
