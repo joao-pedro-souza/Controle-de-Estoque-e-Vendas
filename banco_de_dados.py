@@ -65,5 +65,17 @@ class BancoDeDados:
 
 
     def deletar_produto(self, id):
-        self.cursor.execute('DELETE FROM produtos WHERE id = (?)', id)
+        self.cursor.execute('DELETE FROM produtos WHERE id = (?)', (id, ))
+        self.conexao.commit()
+
+
+    def editar_produto(self, id, nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque):
+        self.cursor.execute("""UPDATE produtos SET
+                    nome = (?),
+                    preco_compra = (?),
+                    preco_venda = (?),
+                    quantidade_estoque = (?),
+                    limite_estoque = (?)
+                    WHERE id = (?)
+                    """, [nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque, id])
         self.conexao.commit()
