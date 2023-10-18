@@ -244,9 +244,8 @@ class TelaProdutos:
                     ]
                 )
             )
-        
-        self.tabela.update()
 
+        self.tabela.update()
 
     def limpar_campos(self):
         self.nome.value = ""
