@@ -20,6 +20,9 @@ class Interface:
                 ft.Tab(
                     text='Vendas',
                     content=tv.tela
+                ),
+                ft.Tab(
+                    text='Vendas do Dia'
                 )
             ],
             expand=1,

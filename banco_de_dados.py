@@ -37,11 +37,12 @@ class BancoDeDados:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             id_produto,
             nome TEXT,
-            valor_compra REAL,
-            valor_unitario REAL,
+            cliente TEXT,
+            preco_unitario REAL,
             unidades_vendidas INTEGER,
-            valor_total REAL,
-            data TEXT
+            preco_total REAL,
+            data TEXT,
+            hora TEXT
             )"""
         )
         self.conexao.commit()
@@ -78,4 +79,15 @@ class BancoDeDados:
     def select_produto(self, nome):
         self.cursor.execute('SELECT * FROM produtos WHERE nome = (?)', [nome])
         return self.cursor.fetchone()
-        
+
+    def cadastrar_venda(self, id, nome, cliente, preco_venda, unidades_vendidas, preco_total):
+        self.cursor.execute("""INSERT INTO vendas (
+                            id_produto,
+                            nome,
+                            cliente,
+                            preco_unitario,
+                            unidades_vendidas,
+                            preco_total) 
+                            VALUES (?, ?, ?, ?, ?, ?)""",
+                            [id, nome, cliente, preco_venda, unidades_vendidas, preco_total])
+        self.conexao.commit()

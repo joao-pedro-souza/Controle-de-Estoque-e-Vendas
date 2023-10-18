@@ -44,7 +44,7 @@ class TelaProdutos:
             ]
         )
 
-        self.botao_cadastrar = ft.ElevatedButton(
+        self.btn_cadastrar = ft.ElevatedButton(
             'Cadastrar',
             on_click=self.clicar_cadastrar
         )
@@ -52,9 +52,9 @@ class TelaProdutos:
         self.tabela = ft.DataTable(
             columns=[
                 ft.DataColumn(ft.Text('id')),
-                ft.DataColumn(ft.Text('nome')),
-                ft.DataColumn(ft.Text('preço')),
-                ft.DataColumn(ft.Text('quantidade')),
+                ft.DataColumn(ft.Text('Nome')),
+                ft.DataColumn(ft.Text('Preço')),
+                ft.DataColumn(ft.Text('Quantidade em Estoque')),
                 ft.DataColumn(ft.Text(''))
             ],
             rows=[]
@@ -65,7 +65,7 @@ class TelaProdutos:
                 self.barra_pesquisa,
                 self.campos,
                 ft.Row(
-                    [self.botao_cadastrar],
+                    [self.btn_cadastrar],
                     alignment=ft.MainAxisAlignment.END
                 ),
                 ft.Row(
@@ -258,3 +258,12 @@ class TelaProdutos:
         self.quantidade_estoque.update()
         self.limite_estoque.value = ""
         self.limite_estoque.update()
+
+    def abrir_alert_cupom(self):
+        pass
+
+    def fechar_alert_cupom(self):
+        pass
+
+    def imprimir_cupom(self):
+        pass

@@ -8,14 +8,37 @@ class TelaVendas:
     def __init__(self, page):
         self.page = page
 
+        self.vendas = []
+
         self.selecao_produto = ft.Dropdown(
             width=200,
             options=[]
         )
 
-        self.adicionar_venda = ft.ElevatedButton(
+        self.unidades_vendidas = ft.TextField(
+            label='Unidades Vendidas'
+        )
+
+        self.cliente = ft.TextField(
+            label='Cliente'
+        )
+
+        self.btn_adicionar_venda = ft.ElevatedButton(
             'Adicionar',
             on_click=self.adicionar_venda
+        )
+
+        self.tabela = ft.DataTable(
+            columns=[
+                ft.DataColumn(ft.Text('id')),
+                ft.DataColumn(ft.Text('Nome')),
+                ft.DataColumn(ft.Text('Cliente')),
+                ft.DataColumn(ft.Text('Preço Unitário')),
+                ft.DataColumn(ft.Text('Unidades Vendidas')),
+                ft.DataColumn(ft.Text('Preço Total')),
+                ft.DataColumn(ft.Text(''))
+            ],
+            rows=[]
         )
 
         self.tela = ft.Column(
@@ -23,8 +46,14 @@ class TelaVendas:
                 ft.Row(
                     controls=[
                         self.selecao_produto,
-                        self.adicionar_venda
+                        self.cliente,
+                        self.unidades_vendidas,
+                        self.btn_adicionar_venda
                     ]
+                ),
+                ft.Row(
+                    controls=[self.tabela],
+                    alignment='CENTER'
                 )
             ]
         )
@@ -48,25 +77,31 @@ class TelaVendas:
 
     def adicionar_venda(self, e):
         produto = db.select_produto(self.selecao_produto.value)
-        
-        id = produto[0]
-        nome = produto[1]
-        preco_compra = produto[2]
-        preco_venda = produto[3]
-        quantidade_estoque = produto[4]
-        limite_estoque = produto[5]
 
-        self.tela.controls.append(
-            ft.Row(
-                controls=[
-                    ft.Text(id),
-                    ft.Text(nome),
-                    ft.Text(preco_compra),
-                    ft.Text(preco_venda),
-                    ft.Text(quantidade_estoque),
-                    ft.Text(limite_estoque)
+        id = produto[0]
+        cliente = self.cliente.value
+        nome = produto[1]
+        preco_venda = produto[3]
+        unidades_vendidas = self.unidades_vendidas.value
+        preco_total = int(unidades_vendidas) * float(preco_venda)
+
+        self.tabela.rows.append(
+            ft.DataRow(
+                cells=[
+                    ft.DataCell(ft.Text(id)),
+                    ft.DataCell(ft.Text(nome)),
+                    ft.DataCell(ft.Text(cliente)),
+                    ft.DataCell(ft.Text(preco_venda)),
+                    ft.DataCell(ft.Text(unidades_vendidas)),
+                    ft.DataCell(ft.Text(preco_total)),
+                    ft.DataCell(ft.Text(''))
                 ]
             )
         )
-        
+
+        self.vendas.append([id, nome, cliente, preco_venda, unidades_vendidas, preco_total])
+        db.cadastrar_venda(id, nome, cliente, preco_venda, unidades_vendidas, preco_total)
+
         self.page.update()
+
+    
