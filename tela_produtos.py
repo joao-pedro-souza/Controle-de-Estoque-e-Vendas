@@ -258,12 +258,3 @@ class TelaProdutos:
         self.quantidade_estoque.update()
         self.limite_estoque.value = ""
         self.limite_estoque.update()
-
-    def abrir_alert_cupom(self):
-        pass
-
-    def fechar_alert_cupom(self):
-        pass
-
-    def imprimir_cupom(self):
-        pass

@@ -6,7 +6,7 @@ from tela_vendas import TelaVendas
 class Interface:
     def __init__(self, page):
         self.page = page
-        tl = TelaProdutos(page)
+        tp = TelaProdutos(page)
         tv = TelaVendas(page)
 
         self.guias = ft.Tabs(
@@ -15,7 +15,7 @@ class Interface:
             tabs=[
                 ft.Tab(
                     text='Produtos',
-                    content=tl.tela
+                    content=tp.tela
                 ),
                 ft.Tab(
                     text='Vendas',

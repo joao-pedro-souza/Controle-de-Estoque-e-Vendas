@@ -24,8 +24,13 @@ class TelaVendas:
         )
 
         self.btn_adicionar_venda = ft.ElevatedButton(
-            'Adicionar',
+            'Adicionar Produto',
             on_click=self.adicionar_venda
+        )
+
+        self.btn_salvar_venda = ft.ElevatedButton(
+            'Salvar Venda',
+            on_click=self.abrir_alert_cupom
         )
 
         self.tabela = ft.DataTable(
@@ -48,7 +53,8 @@ class TelaVendas:
                         self.selecao_produto,
                         self.cliente,
                         self.unidades_vendidas,
-                        self.btn_adicionar_venda
+                        self.btn_adicionar_venda,
+                        self.btn_salvar_venda
                     ]
                 ),
                 ft.Row(
@@ -56,6 +62,18 @@ class TelaVendas:
                     alignment='CENTER'
                 )
             ]
+        )
+
+        self.alert_cupom = ft.AlertDialog(
+            modal=True,
+            title=ft.Text('Cupom Fiscal'),
+            content=ft.Text(
+                'Venda realizada.\nDeseja imprimir o cupom fiscal?'),
+            actions=[
+                ft.TextButton('Sim', on_click=self.imprimir_cupom),
+                ft.TextButton('Não', on_click=self.fechar_alert_cupom)
+            ],
+            actions_alignment=ft.MainAxisAlignment.END
         )
 
         self.carregar_produtos_dropdown()
@@ -100,8 +118,27 @@ class TelaVendas:
         )
 
         self.vendas.append([id, nome, cliente, preco_venda, unidades_vendidas, preco_total])
-        db.cadastrar_venda(id, nome, cliente, preco_venda, unidades_vendidas, preco_total)
+
+        db.cadastrar_venda(id, nome, cliente, preco_venda,
+                           unidades_vendidas, preco_total)
 
         self.page.update()
 
-    
+    def abrir_alert_cupom(self, e):
+        self.page.dialog = self.alert_cupom
+        self.alert_cupom.open = True
+        self.page.update()
+
+    def fechar_alert_cupom(self, e=False):
+        self.alert_cupom.open = False
+        self.page.update()
+        self.limpar_vendas()
+
+    def imprimir_cupom(self, e):
+        self.fechar_alert_cupom()
+        self.limpar_vendas()
+        print(self.vendas)
+
+    def limpar_vendas(self):
+        self.tabela.rows.clear()
+        self.tabela.update()
