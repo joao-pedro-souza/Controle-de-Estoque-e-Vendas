@@ -1,5 +1,6 @@
 import flet as ft
 from banco_de_dados import BancoDeDados
+from cupom_fiscal import CupomFiscal
 
 db = BancoDeDados()
 
@@ -117,7 +118,7 @@ class TelaVendas:
             )
         )
 
-        self.vendas.append([id, nome, cliente, preco_venda, unidades_vendidas, preco_total])
+        self.vendas.append([nome, preco_venda, unidades_vendidas, preco_total])
 
         db.cadastrar_venda(id, nome, cliente, preco_venda,
                            unidades_vendidas, preco_total)
@@ -135,10 +136,12 @@ class TelaVendas:
         self.limpar_vendas()
 
     def imprimir_cupom(self, e):
+        cupom = CupomFiscal('Loja', self.cliente.value, self.vendas)
         self.fechar_alert_cupom()
         self.limpar_vendas()
         print(self.vendas)
 
     def limpar_vendas(self):
+        self.vendas.clear()
         self.tabela.rows.clear()
         self.tabela.update()
