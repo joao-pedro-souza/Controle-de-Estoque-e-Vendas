@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from datetime import datetime
 
 
 class BancoDeDados:
@@ -8,6 +9,8 @@ class BancoDeDados:
         self.criar_conexao()
         self.criar_tabela_produtos()
         self.criar_tabela_vendas()
+        self.data = datetime.now().strftime("%d/%m/%Y")
+        self.hora = datetime.now().strftime("%H:%M:%S")
 
     def criar_pasta(self):
         if not os.path.exists('db'):
@@ -87,7 +90,9 @@ class BancoDeDados:
                             cliente,
                             preco_unitario,
                             unidades_vendidas,
-                            preco_total) 
-                            VALUES (?, ?, ?, ?, ?, ?)""",
-                            [id, nome, cliente, preco_venda, unidades_vendidas, preco_total])
+                            preco_total,
+                            data,
+                            hora) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                            [id, nome, cliente, preco_venda, unidades_vendidas, preco_total, self.data, self.hora])
         self.conexao.commit()
