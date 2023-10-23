@@ -65,7 +65,7 @@ class BancoDeDados:
         self.conexao.commit()
 
     def deletar_produto(self, id):
-        self.cursor.execute('DELETE FROM produtos WHERE id = (?)', (id, ))
+        self.cursor.execute('DELETE FROM produtos WHERE id = (?)', [id])
         self.conexao.commit()
 
     def editar_produto(self, id, nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque):
@@ -96,3 +96,7 @@ class BancoDeDados:
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
                             [id, nome, cliente, preco_venda, unidades_vendidas, preco_total, self.data, self.hora])
         self.conexao.commit()
+    
+    def select_vendas_dia(self):
+        self.cursor.execute("SELECT * FROM vendas WHERE data = (?)", [self.data])
+        return self.cursor.fetchall()
