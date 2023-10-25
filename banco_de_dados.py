@@ -98,5 +98,10 @@ class BancoDeDados:
         self.conexao.commit()
     
     def select_vendas_dia(self):
-        self.cursor.execute("SELECT * FROM vendas WHERE data = (?)", [self.data])
+        self.cursor.execute('SELECT * FROM vendas WHERE data = (?)', [self.data])
         return self.cursor.fetchall()
+
+
+    def diminuir_estoque(self, id, quantidade_estoque):
+        self.cursor.execute('UPDATE produtos SET quantidade_estoque = (?) WHERE id = (?)', [quantidade_estoque, id])
+        self.conexao.commit()
