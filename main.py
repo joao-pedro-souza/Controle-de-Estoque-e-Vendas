@@ -7,7 +7,7 @@ db = BancoDeDados()
 
 def main(page: ft.Page):
     interface = Interface(page)
-    page.title = 'Controle de Estqoue'
+    page.title = 'Controle de Estoque'
     page.scroll = 'auto'
     page.window_maximized = True
     page.add(interface.guias)
