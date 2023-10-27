@@ -154,10 +154,14 @@ class TelaVendas:
         self.limpar_vendas()
 
     def imprimir_cupom(self, e):
+        self.page.snack_bar = ft.SnackBar(
+            ft.Text(f"Imprimindo Nota Fiscal...", color='WHITE'),
+            bgcolor='GREEN'
+        )
+        self.page.snack_bar.open = True
         cupom = CupomFiscal('Loja', self.cliente.value, self.vendas)
         self.fechar_alert_cupom()
         self.limpar_vendas()
-        print(self.vendas)
 
     def limpar_vendas(self):
         self.vendas.clear()
