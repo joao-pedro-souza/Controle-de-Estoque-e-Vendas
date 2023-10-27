@@ -96,12 +96,18 @@ class BancoDeDados:
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
                             [id, nome, cliente, preco_venda, unidades_vendidas, preco_total, self.data, self.hora])
         self.conexao.commit()
-    
+
     def select_vendas_dia(self):
-        self.cursor.execute('SELECT * FROM vendas WHERE data = (?)', [self.data])
+        self.cursor.execute(
+            'SELECT * FROM vendas WHERE data = (?)', [self.data])
         return self.cursor.fetchall()
 
+    def select_estoque_baixo(self):
+        self.cursor.execute(
+            'SELECT * FROM produtos WHERE quantidade_estoque <= limite_estoque')
+        return self.cursor.fetchall()
 
     def diminuir_estoque(self, id, quantidade_estoque):
-        self.cursor.execute('UPDATE produtos SET quantidade_estoque = (?) WHERE id = (?)', [quantidade_estoque, id])
+        self.cursor.execute('UPDATE produtos SET quantidade_estoque = (?) WHERE id = (?)', [
+                            quantidade_estoque, id])
         self.conexao.commit()

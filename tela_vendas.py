@@ -102,7 +102,8 @@ class TelaVendas:
         nome = produto[1]
         preco_venda = produto[3]
         unidades_vendidas = self.unidades_vendidas.value
-        quantidade_estoque = int(produto[4]) - int(self.unidades_vendidas.value)
+        quantidade_estoque = int(
+            produto[4]) - int(self.unidades_vendidas.value)
         preco_total = int(unidades_vendidas) * float(preco_venda)
 
         self.tabela.rows.append(
