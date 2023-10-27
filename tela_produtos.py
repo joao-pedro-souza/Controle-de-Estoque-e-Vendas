@@ -177,6 +177,11 @@ class TelaProdutos:
 
     def fechar_delete(self, e=False):
         self.alert_deletar.open = False
+        self.page.snack_bar = ft.SnackBar(
+            ft.Text(f"Produto apagado com sucesso!", color='WHITE'),
+            bgcolor='RED'
+        )
+        self.page.snack_bar.open = True
         self.page.update()
 
     def confirmar_deletar(self, e):
@@ -184,6 +189,7 @@ class TelaProdutos:
             db.deletar_produto(self.id_produto_deletado)
             self.atualizar_tabela()
             del self.id_produto_deletado
+
             self.fechar_delete()
 
     def abrir_edit(self, e):
@@ -209,6 +215,13 @@ class TelaProdutos:
         )
 
         self.alert_editar.open = False
+
+        self.page.snack_bar = ft.SnackBar(
+            ft.Text(f"Produto editado com sucesso!", color='WHITE'),
+            bgcolor='GREY'
+        )
+        self.page.snack_bar.open = True
+
         self.page.update()
         self.atualizar_tabela()
 
