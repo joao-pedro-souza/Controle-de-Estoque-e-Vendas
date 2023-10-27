@@ -1,6 +1,6 @@
 import flet as ft
 from tela_produtos import TelaProdutos
-from tela_vendas import TelaVendas
+from tela_registrar_venda import TelaVendas
 from tela_vendas_do_dia import VendasDoDia
 from tela_estoque_baixo import EstoqueBaixo
 
@@ -22,7 +22,7 @@ class Interface:
                     content=self.produtos.tela
                 ),
                 ft.Tab(
-                    text='Vendas',
+                    text='Registrar Venda',
                     content=self.vendas.tela
                 ),
                 ft.Tab(
