@@ -161,7 +161,7 @@ class TelaProdutos:
             self.limite_estoque.value
         )
         self.page.snack_bar = ft.SnackBar(
-            ft.Text(f"Produtos cadastrado com sucesso!", color='WHITE'),
+            ft.Text(f"Produto cadastrado com sucesso!", color='WHITE'),
             bgcolor='GREEN'
         )
         self.page.snack_bar.open = True

@@ -104,6 +104,7 @@ class TelaVendas:
         unidades_vendidas = self.unidades_vendidas.value
         quantidade_estoque = int(
             produto[4]) - int(self.unidades_vendidas.value)
+        limite_estoque = int(produto[5])
         preco_total = int(unidades_vendidas) * float(preco_venda)
 
         self.tabela.rows.append(
@@ -120,12 +121,25 @@ class TelaVendas:
             )
         )
 
+        self.page.snack_bar = ft.SnackBar(
+            ft.Text(f"Venda registrada com sucesso!", color='WHITE'),
+            bgcolor='GREEN'
+        )
+        self.page.snack_bar.open = True
+
         self.vendas.append([nome, preco_venda, unidades_vendidas, preco_total])
 
         db.cadastrar_venda(id, nome, cliente, preco_venda,
                            unidades_vendidas, preco_total)
 
         db.diminuir_estoque(id, quantidade_estoque)
+
+        if quantidade_estoque <= limite_estoque:
+            self.page.snack_bar = ft.SnackBar(
+                ft.Text(f"{nome} está com estoque baixo!", color='WHITE'),
+                bgcolor='RED'
+            )
+            self.page.snack_bar.open = True
 
         self.page.update()
 

@@ -13,7 +13,7 @@ class EstoqueBaixo:
                 ft.DataColumn(ft.Text('Preço Compra')),
                 ft.DataColumn(ft.Text('Preço Venda')),
                 ft.DataColumn(ft.Text('Quantidade Estoque')),
-                ft.DataColumn(ft.Text('Estoque Ideal'))
+                ft.DataColumn(ft.Text('Alertar Estoque Baixo'))
             ],
             rows=[]
         )
