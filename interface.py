@@ -13,6 +13,19 @@ class Interface:
         self.vendas_do_dia = VendasDoDia(page)
         self.estoque_baixo = EstoqueBaixo(page)
 
+        self.nome_loja = ft.Text(
+            'Loja',
+            size=40,
+            text_align=ft.TextAlign.END
+        )
+
+        self.titulo = ft.Row(
+            controls=[
+                self.nome_loja
+            ],
+            alignment='CENTER'
+        )
+
         self.guias = ft.Tabs(
             selected_index=0,
             animation_duration=300,

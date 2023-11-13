@@ -49,7 +49,7 @@ class CupomFiscal():
         self.canvas.drawString(self.alinhar_esquerda(),
                                self.calcular_y(14), f'DATA: {self.data}')
         self.canvas.drawString(self.alinhar_esquerda(
-        ), self.calcular_y(14), f'DATA: {self.hora_compra}')
+        ), self.calcular_y(14), f'HORA: {self.hora_compra}')
         self.pular_espaco(10)
 
     def centralizar_texto(self, texto, fonte):
