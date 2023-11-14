@@ -11,6 +11,8 @@ class TelaVendas:
 
         self.vendas = []
 
+        self.soma = 0
+
         self.selecao_produto = ft.Dropdown(
             width=200,
             options=[]
@@ -47,6 +49,11 @@ class TelaVendas:
             rows=[]
         )
 
+        self.preco_venda = ft.Text(
+            f'Preço Total: R$ {self.soma}',
+            size=30
+        )
+
         self.tela = ft.Column(
             controls=[
                 ft.Row(
@@ -60,6 +67,12 @@ class TelaVendas:
                 ),
                 ft.Row(
                     controls=[self.tabela],
+                    alignment='CENTER'
+                ),
+                ft.Row(
+                    controls=[
+                        self.preco_venda
+                    ],
                     alignment='CENTER'
                 )
             ]
@@ -141,6 +154,8 @@ class TelaVendas:
             )
             self.page.snack_bar.open = True
 
+        self.mostrar_preco_venda(preco_total)
+
         self.page.update()
 
     def abrir_alert_cupom(self, e):
@@ -167,3 +182,7 @@ class TelaVendas:
         self.vendas.clear()
         self.tabela.rows.clear()
         self.tabela.update()
+
+    def mostrar_preco_venda(self, preco_total):
+        self.soma += preco_total
+        self.preco_venda.value = f'Preço Total: R$ {self.soma}'

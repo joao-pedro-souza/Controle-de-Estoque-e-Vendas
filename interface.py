@@ -16,14 +16,13 @@ class Interface:
         self.nome_loja = ft.Text(
             'Loja',
             size=40,
-            text_align=ft.TextAlign.END
         )
 
         self.titulo = ft.Row(
             controls=[
                 self.nome_loja
             ],
-            alignment='CENTER'
+            alignment='CENTER',
         )
 
         self.guias = ft.Tabs(
