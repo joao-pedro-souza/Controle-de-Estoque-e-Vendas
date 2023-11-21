@@ -2,6 +2,7 @@ import flet as ft
 from tela_produtos import TelaProdutos
 from tela_registrar_venda import TelaVendas
 from tela_vendas_do_dia import VendasDoDia
+from tela_vendas_do_mes import VendasDoMes
 from tela_estoque_baixo import EstoqueBaixo
 
 
@@ -11,6 +12,7 @@ class Interface:
         self.produtos = TelaProdutos(page)
         self.vendas = TelaVendas(page)
         self.vendas_do_dia = VendasDoDia(page)
+        self.vendas_do_mes = VendasDoMes(page)
         self.estoque_baixo = EstoqueBaixo(page)
 
         self.nome_loja = ft.Text(
@@ -42,6 +44,10 @@ class Interface:
                     content=self.vendas_do_dia.tela
                 ),
                 ft.Tab(
+                    text='Vendas do Mês',
+                    content=self.vendas_do_mes.tela
+                ),
+                ft.Tab(
                     text='Produtos com Estoque Baixo',
                     content=self.estoque_baixo.tela
                 )
@@ -54,5 +60,6 @@ class Interface:
         self.vendas.atualizar_produtos(e)
         self.produtos.atualizar_tabela()
         self.vendas_do_dia.atualizar_vendas()
+        self.vendas_do_mes.atualizar_vendas()
         self.estoque_baixo.atualizar_estoque_baixo()
         self.page.update()

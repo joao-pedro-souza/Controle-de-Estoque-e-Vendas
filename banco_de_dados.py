@@ -10,6 +10,8 @@ class BancoDeDados:
         self.criar_tabela_produtos()
         self.criar_tabela_vendas()
         self.data = datetime.now().strftime("%d/%m/%Y")
+        self.mes = datetime.now().month
+        self.ano = datetime.now().year
         self.hora = datetime.now().strftime("%H:%M:%S")
 
     def criar_pasta(self):
@@ -100,6 +102,11 @@ class BancoDeDados:
     def select_vendas_dia(self):
         self.cursor.execute(
             'SELECT * FROM vendas WHERE data = (?)', [self.data])
+        return self.cursor.fetchall()
+
+    def select_vendas_mes(self):
+        self.cursor.execute(
+            'SELECT * FROM vendas WHERE data LIKE (?)', [f'%/{self.mes}/{self.ano}'])
         return self.cursor.fetchall()
 
     def select_estoque_baixo(self):
