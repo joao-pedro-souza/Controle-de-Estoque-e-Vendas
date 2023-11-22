@@ -60,6 +60,9 @@ class BancoDeDados:
         return self.cursor.description
 
     def cadastrar_produto(self, nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque):
+        preco_compra = preco_compra.replace(',', '.')
+        preco_venda = preco_venda.replace(',', '.')
+        
         self.cursor.execute('INSERT INTO produtos (nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque) VALUES (?, ?, ?, ?, ?)',
                             [nome, preco_compra, preco_venda,
                                 quantidade_estoque, limite_estoque]
