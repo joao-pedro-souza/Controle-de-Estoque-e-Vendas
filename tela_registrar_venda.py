@@ -22,10 +22,6 @@ class TelaVendas:
             label='Unidades Vendidas'
         )
 
-        self.cliente = ft.TextField(
-            label='Cliente'
-        )
-
         self.btn_adicionar_venda = ft.ElevatedButton(
             'Adicionar Produto',
             on_click=self.adicionar_venda
@@ -40,7 +36,6 @@ class TelaVendas:
             columns=[
                 ft.DataColumn(ft.Text('id')),
                 ft.DataColumn(ft.Text('Nome')),
-                ft.DataColumn(ft.Text('Cliente')),
                 ft.DataColumn(ft.Text('Preço Unitário')),
                 ft.DataColumn(ft.Text('Unidades Vendidas')),
                 ft.DataColumn(ft.Text('Preço Total')),
@@ -59,7 +54,6 @@ class TelaVendas:
                 ft.Row(
                     controls=[
                         self.selecao_produto,
-                        self.cliente,
                         self.unidades_vendidas,
                         self.btn_adicionar_venda,
                         self.btn_salvar_venda
@@ -111,7 +105,6 @@ class TelaVendas:
         produto = db.select_produto(self.selecao_produto.value)
 
         id = produto[0]
-        cliente = self.cliente.value
         nome = produto[1]
         preco_venda = produto[3]
         unidades_vendidas = self.unidades_vendidas.value
@@ -125,7 +118,6 @@ class TelaVendas:
                 cells=[
                     ft.DataCell(ft.Text(id)),
                     ft.DataCell(ft.Text(nome)),
-                    ft.DataCell(ft.Text(cliente)),
                     ft.DataCell(ft.Text(preco_venda)),
                     ft.DataCell(ft.Text(unidades_vendidas)),
                     ft.DataCell(ft.Text(preco_total)),
@@ -142,7 +134,7 @@ class TelaVendas:
 
         self.vendas.append([nome, preco_venda, unidades_vendidas, preco_total])
 
-        db.cadastrar_venda(id, nome, cliente, preco_venda,
+        db.cadastrar_venda(id, nome, preco_venda,
                            unidades_vendidas, preco_total)
 
         db.diminuir_estoque(id, quantidade_estoque)
@@ -174,7 +166,7 @@ class TelaVendas:
             bgcolor='GREEN'
         )
         self.page.snack_bar.open = True
-        cupom = CupomFiscal('Loja', self.cliente.value, self.vendas)
+        cupom = CupomFiscal('Loja', self.vendas)
         self.fechar_alert_cupom()
         self.limpar_vendas()
 

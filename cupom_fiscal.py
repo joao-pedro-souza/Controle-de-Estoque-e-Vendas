@@ -6,10 +6,9 @@ import win32api
 
 
 class CupomFiscal():
-    def __init__(self, nome_loja=str, cliente=str, produtos=list):
+    def __init__(self, nome_loja=str, produtos=list):
         self.criar_pasta()
         self.nome_loja = nome_loja
-        self.cliente = cliente
         self.produtos = produtos
         self.data = datetime.now().strftime("%d/%m/%Y")
         self.hora_compra = datetime.now().strftime("%H:%M:%S")
@@ -44,8 +43,6 @@ class CupomFiscal():
             0), (self.largura_pagina - self.alinhar_esquerda()), y)
         self.canvas.setFont('Helvetica', 12)
         self.pular_espaco(10)
-        self.canvas.drawString(self.alinhar_esquerda(), self.calcular_y(
-            14), f'CLIENTE: {self.cliente.upper()}')
         self.canvas.drawString(self.alinhar_esquerda(),
                                self.calcular_y(14), f'DATA: {self.data}')
         self.canvas.drawString(self.alinhar_esquerda(
