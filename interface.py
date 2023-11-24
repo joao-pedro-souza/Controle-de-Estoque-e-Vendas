@@ -17,7 +17,7 @@ class Interface:
 
         self.nome_loja = ft.Text(
             'Loja',
-            size=40,
+            size=80,
         )
 
         self.titulo = ft.Row(

@@ -10,6 +10,7 @@ def main(page: ft.Page):
     page.title = 'Controle de Estoque'
     page.scroll = 'auto'
     page.theme = ft.theme.Theme(color_scheme_seed="green")
+    page.theme_mode = 'LIGHT'
     page.window_maximized = True
     page.add(interface.titulo)
     page.add(interface.guias)
