@@ -1,6 +1,8 @@
 import flet as ft
 from banco_de_dados import BancoDeDados
 from cupom_fiscal import CupomFiscal
+from tela_vendas_do_dia import salvar_planilha_dia
+from tela_vendas_do_mes import salvar_planilha_mes
 
 db = BancoDeDados()
 
@@ -147,6 +149,9 @@ class TelaVendas:
             self.page.snack_bar.open = True
 
         self.mostrar_preco_venda(preco_total)
+
+        salvar_planilha_dia()
+        salvar_planilha_mes()
 
         self.page.update()
 

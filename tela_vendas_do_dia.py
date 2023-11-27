@@ -1,7 +1,17 @@
 import flet as ft
+import pandas as pd
 from banco_de_dados import BancoDeDados
+from datetime import datetime
 
 db = BancoDeDados()
+
+
+def salvar_planilha_dia():
+    dia = datetime.now().strftime('%d/%m/%Y')
+    colunas = [coluna[0] for coluna in db.select_colunas()]
+    planilha = pd.DataFrame(db.select_vendas_dia(), columns=colunas)
+    planilha.to_excel(
+        f'vendas_{dia.replace('/', '_')}.xlsx', index_label=False)
 
 
 class VendasDoDia:
@@ -30,6 +40,7 @@ class VendasDoDia:
         )
 
         self.carregar_vendas()
+        salvar_planilha_dia()
 
     def carregar_vendas(self):
         tabela_produtos = db.select_vendas_dia()
@@ -57,4 +68,5 @@ class VendasDoDia:
     def atualizar_vendas(self):
         self.tabela.rows.clear()
         self.carregar_vendas()
+        salvar_planilha_dia()
         self.tabela.update()

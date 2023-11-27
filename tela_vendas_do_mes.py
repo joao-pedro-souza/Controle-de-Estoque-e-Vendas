@@ -1,7 +1,19 @@
 import flet as ft
+import pandas as pd
+import locale
 from banco_de_dados import BancoDeDados
+from datetime import datetime
+
+locale.setlocale(locale.LC_ALL, '')
 
 db = BancoDeDados()
+
+
+def salvar_planilha_mes():
+    mes = datetime.now().strftime('%B')
+    colunas = [coluna[0] for coluna in db.select_colunas()]
+    planilha = pd.DataFrame(db.select_vendas_mes(), columns=colunas)
+    planilha.to_excel(f'vendas_mes_{mes}.xlsx', index=False)
 
 
 class VendasDoMes:
@@ -30,11 +42,13 @@ class VendasDoMes:
         )
 
         self.carregar_vendas()
+        salvar_planilha_mes()
 
     def carregar_vendas(self):
         tabela_produtos = db.select_vendas_mes()
-        colunas = [coluna[0] for coluna in db.select_colunas()]
-        produtos = [dict(zip(colunas, produto)) for produto in tabela_produtos]
+        self.colunas = [coluna[0] for coluna in db.select_colunas()]
+        produtos = [dict(zip(self.colunas, produto))
+                    for produto in tabela_produtos]
 
         for produto in produtos:
 
@@ -58,3 +72,4 @@ class VendasDoMes:
         self.tabela.rows.clear()
         self.carregar_vendas()
         self.tabela.update()
+        salvar_planilha_mes()
