@@ -12,7 +12,6 @@ class BancoDeDados:
         self.data = datetime.now().strftime("%d/%m/%Y")
         self.mes = datetime.now().month
         self.ano = datetime.now().year
-        self.hora = datetime.now().strftime("%H:%M:%S")
 
     def criar_pasta(self):
         if not os.path.exists('db'):
@@ -61,7 +60,7 @@ class BancoDeDados:
     def cadastrar_produto(self, nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque):
         preco_compra = preco_compra.replace(',', '.')
         preco_venda = preco_venda.replace(',', '.')
-        
+
         self.cursor.execute('INSERT INTO produtos (nome, preco_compra, preco_venda, quantidade_estoque, limite_estoque) VALUES (?, ?, ?, ?, ?)',
                             [nome, preco_compra, preco_venda,
                                 quantidade_estoque, limite_estoque]
@@ -88,6 +87,7 @@ class BancoDeDados:
         return self.cursor.fetchone()
 
     def cadastrar_venda(self, id, nome, preco_venda, unidades_vendidas, preco_total):
+        self.hora = datetime.now().strftime("%H:%M:%S")
         self.cursor.execute("""INSERT INTO vendas (
                             id_produto,
                             nome,
@@ -99,6 +99,7 @@ class BancoDeDados:
                             VALUES (?, ?, ?, ?, ?, ?, ?)""",
                             [id, nome, preco_venda, unidades_vendidas, preco_total, self.data, self.hora])
         self.conexao.commit()
+        
 
     def select_vendas_dia(self):
         self.cursor.execute(
@@ -119,5 +120,3 @@ class BancoDeDados:
         self.cursor.execute('UPDATE produtos SET quantidade_estoque = (?) WHERE id = (?)', [
                             quantidade_estoque, id])
         self.conexao.commit()
-
-    
