@@ -113,7 +113,7 @@ class TelaVendas:
         quantidade_estoque = int(
             produto[4]) - int(self.unidades_vendidas.value)
         limite_estoque = int(produto[5])
-        preco_total = int(unidades_vendidas) * float(preco_venda)
+        self.preco_total = int(unidades_vendidas) * float(preco_venda)
 
         self.tabela.rows.append(
             ft.DataRow(
@@ -122,7 +122,7 @@ class TelaVendas:
                     ft.DataCell(ft.Text(nome)),
                     ft.DataCell(ft.Text(preco_venda)),
                     ft.DataCell(ft.Text(unidades_vendidas)),
-                    ft.DataCell(ft.Text(preco_total)),
+                    ft.DataCell(ft.Text(self.preco_total)),
                     ft.DataCell(ft.Text(''))
                 ]
             )
@@ -134,10 +134,10 @@ class TelaVendas:
         )
         self.page.snack_bar.open = True
 
-        self.vendas.append([nome, preco_venda, unidades_vendidas, preco_total])
+        self.vendas.append([nome, preco_venda, unidades_vendidas, self.preco_total])
 
         db.cadastrar_venda(id, nome, preco_venda,
-                           unidades_vendidas, preco_total)
+                           unidades_vendidas, self.preco_total)
 
         db.diminuir_estoque(id, quantidade_estoque)
 
@@ -148,7 +148,7 @@ class TelaVendas:
             )
             self.page.snack_bar.open = True
 
-        self.mostrar_preco_venda(preco_total)
+        self.mostrar_preco_venda(self.preco_total)
 
         salvar_planilha_dia()
         salvar_planilha_mes()
@@ -162,8 +162,9 @@ class TelaVendas:
 
     def fechar_alert_cupom(self, e=False):
         self.alert_cupom.open = False
-        self.page.update()
         self.limpar_vendas()
+        self.page.update()
+        
 
     def imprimir_cupom(self, e):
         self.page.snack_bar = ft.SnackBar(
@@ -178,7 +179,11 @@ class TelaVendas:
     def limpar_vendas(self):
         self.vendas.clear()
         self.tabela.rows.clear()
+        self.preco_total = 0
+        self.soma = 0
+        self.preco_venda.value = f'Preço Total: R$ {self.soma}'
         self.tabela.update()
+        
 
     def mostrar_preco_venda(self, preco_total):
         self.soma += preco_total
