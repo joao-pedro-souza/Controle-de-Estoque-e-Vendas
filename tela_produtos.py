@@ -110,7 +110,7 @@ class TelaProdutos:
         produtos = [dict(zip(colunas, produto)) for produto in tabela_produtos]
 
         for produto in produtos:
-            cor_estoque = 'white'
+            cor_estoque = 'black'
             limite_estoque_numerico = isinstance(
                 produto['limite_estoque'], int)
 
