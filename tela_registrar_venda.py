@@ -134,7 +134,8 @@ class TelaVendas:
         )
         self.page.snack_bar.open = True
 
-        self.vendas.append([nome, preco_venda, unidades_vendidas, self.preco_total])
+        self.vendas.append(
+            [nome, preco_venda, unidades_vendidas, self.preco_total])
 
         db.cadastrar_venda(id, nome, preco_venda,
                            unidades_vendidas, self.preco_total)
@@ -164,7 +165,6 @@ class TelaVendas:
         self.alert_cupom.open = False
         self.limpar_vendas()
         self.page.update()
-        
 
     def imprimir_cupom(self, e):
         self.page.snack_bar = ft.SnackBar(
@@ -183,7 +183,6 @@ class TelaVendas:
         self.soma = 0
         self.preco_venda.value = f'Preço Total: R$ {self.soma}'
         self.tabela.update()
-        
 
     def mostrar_preco_venda(self, preco_total):
         self.soma += preco_total
