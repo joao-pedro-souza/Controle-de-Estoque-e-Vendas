@@ -60,6 +60,10 @@ class TelaProdutos:
             rows=[]
         )
 
+        self.tabela_selecionavel = ft.SelectionArea(
+            content=self.tabela
+        )
+
         self.tela = ft.Column(
             controls=[
                 self.barra_pesquisa,
@@ -69,7 +73,7 @@ class TelaProdutos:
                     alignment=ft.MainAxisAlignment.END
                 ),
                 ft.Row(
-                    [self.tabela],
+                    [self.tabela_selecionavel],
                     alignment='CENTER'
                 )
             ],
