@@ -15,11 +15,6 @@ class TelaVendas:
 
         self.soma = 0
 
-        self.selecao_produto = ft.Dropdown(
-            width=200,
-            options=[]
-        )
-
         self.unidades_vendidas = ft.TextField(
             label='Unidades Vendidas'
         )
@@ -32,6 +27,10 @@ class TelaVendas:
         self.btn_salvar_venda = ft.ElevatedButton(
             'Salvar Venda',
             on_click=self.abrir_alert_cupom
+        )
+
+        self.nome_do_produto = ft.TextField(
+            label='Nome do Produto'
         )
 
         self.tabela = ft.DataTable(
@@ -55,7 +54,7 @@ class TelaVendas:
             controls=[
                 ft.Row(
                     controls=[
-                        self.selecao_produto,
+                        self.nome_do_produto,
                         self.unidades_vendidas,
                         self.btn_adicionar_venda,
                         self.btn_salvar_venda
@@ -86,25 +85,8 @@ class TelaVendas:
             actions_alignment=ft.MainAxisAlignment.END
         )
 
-        self.carregar_produtos_dropdown()
-
-    def carregar_produtos_dropdown(self):
-        tabela_produtos = db.select_todos_produtos()
-        colunas = [coluna[0] for coluna in db.select_colunas()]
-        produtos = [dict(zip(colunas, produto)) for produto in tabela_produtos]
-
-        for produto in produtos:
-            self.selecao_produto.options.append(
-                ft.dropdown.Option(produto['nome'])
-            )
-
-    def atualizar_produtos(self, e):
-        self.selecao_produto.options.clear()
-        self.carregar_produtos_dropdown()
-        self.page.update()
-
     def adicionar_venda(self, e):
-        produto = db.select_produto(self.selecao_produto.value)
+        produto = db.select_produto(self.nome_do_produto.value)
 
         id = produto[0]
         nome = produto[1]
@@ -150,6 +132,8 @@ class TelaVendas:
             self.page.snack_bar.open = True
 
         self.mostrar_preco_venda(self.preco_total)
+        
+        self.nome_do_produto.value = ""
 
         salvar_planilha_dia()
         salvar_planilha_mes()

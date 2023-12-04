@@ -57,7 +57,6 @@ class Interface:
         )
 
     def atualizar_guias(self, e):
-        self.vendas.atualizar_produtos(e)
         self.produtos.atualizar_tabela()
         self.vendas_do_dia.atualizar_vendas()
         self.vendas_do_mes.atualizar_vendas()
