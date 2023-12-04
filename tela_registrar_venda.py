@@ -48,7 +48,7 @@ class TelaVendas:
 
         self.preco_venda = ft.Text(
             f'Preço Total: R$ {self.soma}',
-            size=30
+            size=80
         )
 
         self.tela = ft.Column(
