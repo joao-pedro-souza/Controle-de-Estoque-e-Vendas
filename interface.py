@@ -16,7 +16,7 @@ class Interface:
         self.estoque_baixo = EstoqueBaixo(page)
 
         self.nome_loja = ft.Text(
-            'Loja',
+            'Lame Utilidades',
             size=80,
         )
 

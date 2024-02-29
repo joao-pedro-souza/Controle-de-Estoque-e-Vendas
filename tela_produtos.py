@@ -34,11 +34,16 @@ class TelaProdutos:
         # Guarda id do produto a ser deletado
         self.id_produto_deletado = None
 
-        self.campos = ft.Row(
+        self.campos1 = ft.Row(
             controls=[
                 self.nome,
                 self.preco_compra,
-                self.preco_venda,
+                self.preco_venda
+            ]
+        )
+
+        self.campos2 = ft.Row(
+            controls=[
                 self.quantidade_estoque,
                 self.limite_estoque
             ]
@@ -67,7 +72,8 @@ class TelaProdutos:
         self.tela = ft.Column(
             controls=[
                 self.barra_pesquisa,
-                self.campos,
+                self.campos1,
+                self.campos2,
                 ft.Row(
                     [self.btn_cadastrar],
                     alignment=ft.MainAxisAlignment.END

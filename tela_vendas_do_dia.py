@@ -20,7 +20,6 @@ class VendasDoDia:
             columns=[
                 ft.DataColumn(ft.Text('id')),
                 ft.DataColumn(ft.Text('Nome')),
-                ft.DataColumn(ft.Text('Cliente')),
                 ft.DataColumn(ft.Text('Preço Unitário')),
                 ft.DataColumn(ft.Text('Unidades Vendidas')),
                 ft.DataColumn(ft.Text('Preço Total')),
@@ -54,7 +53,6 @@ class VendasDoDia:
                     cells=[
                         ft.DataCell(ft.Text(produto['id'])),
                         ft.DataCell(ft.Text(produto['nome'])),
-                        ft.DataCell(ft.Text(produto['cliente'])),
                         ft.DataCell(ft.Text(produto['preco_unitario'])),
                         ft.DataCell(ft.Text(produto['unidades_vendidas'])),
                         ft.DataCell(ft.Text(produto['preco_total'])),
