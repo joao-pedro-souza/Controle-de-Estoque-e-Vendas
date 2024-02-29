@@ -14,6 +14,7 @@ class TelaVendas:
         self.vendas = []
 
         self.soma = 0
+        self.troco = 0
 
         self.unidades_vendidas = ft.TextField(
             label='Unidades Vendidas'
@@ -50,6 +51,11 @@ class TelaVendas:
             size=80
         )
 
+        self.texto_troco = ft.Text(
+            f'Troco: R$ {self.troco}',
+            size=80
+        )
+
         self.tela = ft.Column(
             controls=[
                 ft.Row(
@@ -66,7 +72,13 @@ class TelaVendas:
                 ),
                 ft.Row(
                     controls=[
-                        self.preco_venda
+                        self.preco_venda,
+                    ],
+                    alignment='CENTER'
+                ),
+                ft.Row(
+                    controls=[
+                        self.texto_troco
                     ],
                     alignment='CENTER'
                 )

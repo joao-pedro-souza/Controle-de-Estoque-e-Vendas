@@ -10,8 +10,7 @@ def salvar_planilha_dia():
     dia = datetime.now().strftime('%d/%m/%Y')
     colunas = [coluna[0] for coluna in db.select_colunas()]
     planilha = pd.DataFrame(db.select_vendas_dia(), columns=colunas)
-    planilha.to_excel(
-        f'vendas_{dia.replace('/', '_')}.xlsx', index_label=False)
+    planilha.to_excel(f'vendas_{dia.replace('/', '_')}.xlsx', index_label=False)
 
 
 class VendasDoDia:
