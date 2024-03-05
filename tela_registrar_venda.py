@@ -20,6 +20,10 @@ class TelaVendas:
             label='Unidades Vendidas'
         )
 
+        self.campo_troco = ft.TextField(
+            label='Calcular troco'
+        )
+
         self.btn_adicionar_venda = ft.ElevatedButton(
             'Adicionar Produto',
             on_click=self.adicionar_venda
@@ -62,6 +66,7 @@ class TelaVendas:
                     controls=[
                         self.nome_do_produto,
                         self.unidades_vendidas,
+                        self.campo_troco,
                         self.btn_adicionar_venda,
                         self.btn_salvar_venda
                     ]
