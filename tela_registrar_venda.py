@@ -149,6 +149,7 @@ class TelaVendas:
             self.page.snack_bar.open = True
 
         self.mostrar_preco_venda(self.preco_total)
+        self.calcular_troco(self.preco_total, self.campo_troco.value)
         
         self.nome_do_produto.value = ""
 
@@ -181,6 +182,7 @@ class TelaVendas:
         self.vendas.clear()
         self.tabela.rows.clear()
         self.preco_total = 0
+        self.troco = 0
         self.soma = 0
         self.preco_venda.value = f'Preço Total: R$ {self.soma}'
         self.tabela.update()
@@ -188,3 +190,9 @@ class TelaVendas:
     def mostrar_preco_venda(self, preco_total):
         self.soma += preco_total
         self.preco_venda.value = f'Preço Total: R$ {self.soma}'
+
+    def calcular_troco(self, preco_total, campo_troco):
+        self.troco = float(campo_troco) - preco_total
+        self.texto_troco.value = f'Troco: R$ {self.troco}'
+
+
