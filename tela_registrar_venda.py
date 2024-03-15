@@ -174,7 +174,7 @@ class TelaVendas:
             bgcolor='GREEN'
         )
         self.page.snack_bar.open = True
-        cupom = CupomFiscal('Loja', self.vendas)
+        cupom = CupomFiscal('Loja', self.vendas, 'CNPJ')
         self.fechar_alert_cupom()
         self.limpar_vendas()
 
